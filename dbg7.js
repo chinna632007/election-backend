@@ -1,0 +1,14 @@
+const ba = require('./src/modules/randomization/ballot-allocation.js');
+const XLSX = require('xlsx');
+const fs = require('fs');
+const wb = XLSX.readFile('/home/arc/Downloads/importsdata/kakinada_polling_stations.xlsx');
+const buf = fs.readFileSync('/home/arc/Downloads/importsdata/kakinada_polling_stations.xlsx');
+console.log('buffer type:', buf instanceof Buffer, 'length:', buf.length);
+const w2 = XLSX.read(buf, { type: 'buffer', cellDates: true, raw: false });
+console.log('sheets:', w2.SheetNames);
+const grid = XLSX.utils.sheet_to_json(w2.Sheets[w2.SheetNames[0]], { header: 1, raw: true, defval: '', blankrows: false });
+console.log('grid length:', grid.length);
+console.log('grid[0]:', JSON.stringify(grid[0]));
+const grid2 = XLSX.utils.sheet_to_json(w2.Sheets[w2.SheetNames[0]], { header: 1, raw: false, defval: '', blankrows: false });
+console.log('grid2 length:', grid2.length);
+console.log('grid2[0]:', JSON.stringify(grid2[0]));

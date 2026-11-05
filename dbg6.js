@@ -1,0 +1,13 @@
+const XLSX = require('xlsx');
+const wb = XLSX.readFile('/home/arc/Downloads/importsdata/kakinada_polling_stations.xlsx');
+const ws = wb.Sheets['Sheet1'];
+console.log('ref:', ws['!ref']);
+const grid = XLSX.utils.sheet_to_json(ws, { header: 1, raw: false, defval: '', blankrows: false });
+console.log('raw:false grid length:', grid.length);
+console.log('raw:false grid[0]:', JSON.stringify(grid[0]));
+const grid2 = XLSX.utils.sheet_to_json(ws, { header: 1, raw: true, defval: '', blankrows: false });
+console.log('raw:true grid length:', grid2.length);
+console.log('raw:true grid[0]:', JSON.stringify(grid2[0]));
+const grid3 = XLSX.utils.sheet_to_json(ws, { header: 1, raw: false, defval: '', blankrows: false, range: 'A1:K5' });
+console.log('range grid length:', grid3.length);
+console.log('range grid[0]:', JSON.stringify(grid3[0]));
