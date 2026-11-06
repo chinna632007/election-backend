@@ -37,6 +37,8 @@ async function reserveIds(collectionName, count) {
 
 function importSummary(accepted, rejected) {
   return {
+    count: accepted.length,
+    replaced: accepted.length,
     totalRows: accepted.length + rejected.length,
     acceptedRows: accepted.length,
     rejectedRows: rejected.length,

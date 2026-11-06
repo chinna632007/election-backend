@@ -51,16 +51,34 @@ router.post('/login', loginLimiter.middleware(), async (req, res) => {
     return res.status(401).json({ ok: false, error: 'Invalid username or password' });
   }
 
-  req.session.regenerate((err) => {
+  req.session.regenerate(async (err) => {
     if (err) {
       return res.status(500).json({ ok: false, error: 'Failed to create session' });
     }
     req.session.user = { id: String(user.id), username: user.username, role: user.role };
+    try {
+      const col = getCollection('workflow_state');
+      const target = col.collection || col;
+      if (target && typeof target.deleteMany === 'function') {
+        await target.deleteMany({});
+      }
+    } catch {
+      // non-blocking
+    }
     res.json({ ok: true, user: req.session.user });
   });
 });
 
-router.post('/logout', (req, res) => {
+router.post('/logout', async (req, res) => {
+  try {
+    const col = getCollection('workflow_state');
+    const target = col.collection || col;
+    if (target && typeof target.deleteMany === 'function') {
+      await target.deleteMany({});
+    }
+  } catch {
+    // non-blocking
+  }
   req.session.destroy(() => {
     res.clearCookie('connect.sid');
     res.json({ ok: true });

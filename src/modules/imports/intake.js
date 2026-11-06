@@ -156,10 +156,22 @@ function parseMicroObservers(buffer) {
 function parseTrainingLocations(buffer) {
   const grid = readGrid(buffer);
   const { colMap, headerRow } = mapHeader(grid, {
-    location_name: ['location', 'venuename', 'venue'],
-    mandal: ['mandal'],
-    panchayat: ['panchayat'],
+    location_name: [
+      'locationname',
+      'traininglocation',
+      'trainingvenue',
+      'venueplace',
+      'venuename',
+      'location',
+      'venue',
+      'place',
+    ],
+    mandal: ['mandalname', 'mandal', 'block'],
+    panchayat: ['panchayatname', 'panchayat', 'village', 'ward'],
     category: ['category', 'sensitivity'],
+    capacity: ['capacity', 'maxcapacity', 'seats'],
+    contact_person: ['contactperson', 'contactname', 'incharge'],
+    mobile: ['mobileno', 'mobile', 'phoneno', 'phone', 'contactno'],
   });
   if (colMap.location_name === undefined || colMap.mandal === undefined) {
     throw new IntakeParseError('Training locations sheet requires Location, Location Name or Venue, and Mandal columns.');
@@ -188,6 +200,9 @@ function parseTrainingLocations(buffer) {
       mandal,
       panchayat: get('panchayat') || null,
       category: get('category') || null,
+      capacity: Number(get('capacity')) || 100,
+      contact_person: get('contact_person') || null,
+      mobile: get('mobile') || null,
     };
     if (reasons.length > 0) rejected.push({ sheetRow: i + 1, employeeId: null, reasons });
     else accepted.push(record);
