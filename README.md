@@ -58,8 +58,8 @@ completed batch instead of inserting duplicate personnel rows.
 ## Team responsibilities
 
 - **Teammate 1** — Stage 1 (`src/modules/randomization-stage-1/`).
-- **Teammate 2** — Stage 2 (`src/modules/randomization-stage-2/`).
-- **Me** — Stage 3 (`src/modules/randomization-stage-3/`) and training (`src/modules/training/`).
+- **Me** — Stage 2 (`src/modules/randomization-stage-2/`).
+- **SMDHussain** — Stage 3 (`src/modules/randomization-stage-3/`) and training (`src/modules/training/`).
 - Shared areas (`src/config/`, `src/database/`, `src/middleware/`, `src/shared/`, master data, personnel, imports, reports, audit) are co-owned. See `docs/TEAM_RESPONSIBILITIES.md`.
 
 ## Repository structure
